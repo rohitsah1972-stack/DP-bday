@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mischief Managed &bull; My dear felicity Darakhshan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;800&family=MonteCarlo&family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #1a0826 0%, #0d0214 45%, #050008 85%, #000 100%);
+      font-family: 'Cinzel', serif;
+      color: #ffd700;
+    }
+
+    /* Floating Music Button */
+    #musicToggle {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      z-index: 10000;
+      background: rgba(22, 6, 28, 0.85);
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Magical Bomb Tremor */
+    .magical-quake {
+      animation: spellTremor 0.85s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes spellTremor {
+      0% { transform: scale(1.05) translate(0, 0); }
+      10% { transform: scale(1.04) translate(-16px, 14px) rotate(-2deg); }
+      20% { transform: scale(1.03) translate(18px, -12px) rotate(2deg); }
+      30% { transform: scale(1.02) translate(-20px, 16px) rotate(-2.5deg); }
+      40% { transform: scale(1.01) translate(18px, -12px) rotate(1.5deg); }
+      50% { transform: scale(1) translate(-12px, 8px) rotate(-1deg); }
+      70% { transform: scale(1) translate(8px, -4px) rotate(0.5deg); }
+      100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+    }
+
+    /* Arcane Flash Detonation */
+    #flashOverlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, #ffffff 15%, #00ffaa 45%, #ff0055 75%, transparent 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: opacity 0.09s ease-out;
+    }
+
+    #magicCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* SCENE 1 */
+    #scene1 {
+      z-index: 20;
+    }
+    .hogwarts-sub {
+      font-family: 'Cinzel Decorative', serif;
+      letter-spacing: 6px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      color: #f7d070;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(0, 255, 170, 0.6);
+      margin-bottom: 2rem;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .heart-stage {
+      position: relative;
+      width: 280px;
+      height: 240px;
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hallows-ring {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 1px dashed rgba(255, 215, 0, 0.4);
+      border-radius: 50%;
+      animation: spinRune 22s linear infinite;
+      box-shadow: 0 0 45px rgba(0, 255, 180, 0.2) inset;
+      z-index: 1;
+    }
+    @keyframes spinRune {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .golden-snitch {
+      position: absolute;
+      top: -15px;
+      right: 25px;
+      width: 45px;
+      height: 45px;
+      z-index: 12;
+      animation: snitchBob 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px #ffd700);
+    }
+    @keyframes snitchBob {
+      0%, 100% { transform: translateY(0) rotate(5deg); }
+      50% { transform: translateY(-16px) rotate(-8deg); }
+    }
+    .snitch-core {
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 35% 35%, #fff5aa, #e6a100 70%, #613b00);
+      border-radius: 50%;
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      box-shadow: 0 0 12px #ffe600;
+    }
+    .wing {
+      position: absolute;
+      top: 6px;
+      width: 26px;
+      height: 10px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,215,0,0.2));
+      border-radius: 50% 50% 10% 10%;
+    }
+    .wing-left { left: -6px; animation: flapLeft 0.12s infinite alternate; }
+    .wing-right { right: -6px; transform: scaleX(-1); animation: flapRight 0.12s infinite alternate; }
+    @keyframes flapLeft {
+      0% { transform: rotate(10deg) skewX(20deg); }
+      100% { transform: rotate(-45deg) skewX(-20deg); }
+    }
+    @keyframes flapRight {
+      0% { transform: scaleX(-1) rotate(10deg) skewX(20deg); }
+      100% { transform: scaleX(-1) rotate(-45deg) skewX(-20deg); }
+    }
+
+    .heart-wrapper {
+      position: relative;
+      width: 165px;
+      height: 155px;
+      transform-origin: center center;
+      filter: drop-shadow(0 0 35px #a81c47) drop-shadow(0 0 75px rgba(255, 0, 90, 0.7));
+      animation: horcruxPulse 1.8s infinite ease-in-out;
+      z-index: 2;
+    }
+    @keyframes horcruxPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 35px #a81c47) drop-shadow(0 0 70px #ff0055); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 55px #00ffaa) drop-shadow(0 0 110px #00cc88); }
+    }
+
+    .horn {
+      position: absolute;
+      top: -32px;
+      width: 34px;
+      height: 58px;
+      fill: #19000a;
+      stroke: #00ffcc;
+      stroke-width: 1.5;
+      filter: drop-shadow(0 0 10px #00ffaa);
+    }
+    .horn-left { left: 16px; transform: rotate(-22deg) scaleX(-1); }
+    .horn-right { right: 16px; transform: rotate(22deg); }
+
+    .heart-svg {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stuck-bolt {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140px;
+      height: 24px;
+      display: none;
+      transform: translate(-50%, -50%) rotate(42deg);
+      filter: drop-shadow(0 0 14px #00ffaa) drop-shadow(0 0 25px #ffffff);
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .heart-falling {
+      animation: soulShatterDrop 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards !important;
+    }
+    @keyframes soulShatterDrop {
+      0% {
+        transform: translateY(0) scale(1.3) rotate(0deg);
+        filter: brightness(4) drop-shadow(0 0 100px #00ffbb);
+      }
+      18% {
+        transform: translateY(-60px) scale(1.4) rotate(-22deg);
+      }
+      60% {
+        transform: translateY(340px) scale(0.9) rotate(60deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(920px) scale(0.25) rotate(140deg);
+        opacity: 0;
+      }
+    }
+
+    /* Interactive Wand Area */
+    .wand-dock {
+      position: relative;
+      width: 220px;
+      height: 160px;
+      cursor: grab;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wand-dock:active {
+      cursor: grabbing;
+    }
+    .guide-caption {
+      font-size: 0.85rem;
+      letter-spacing: 4px;
+      color: #e5b869;
+      text-transform: uppercase;
+      margin-top: 1.4rem;
+      transition: opacity 0.5s;
+      text-align: center;
+    }
+
+    #flyingBolt {
+      position: fixed;
+      width: 140px;
+      height: 24px;
+      pointer-events: none;
+      display: none;
+      z-index: 9999;
+      filter: drop-shadow(0 0 25px #00ffaa) drop-shadow(0 0 15px #ffd700);
+    }
+
+    /* SCENE 2 */
+    #scene2 {
+      background: radial-gradient(circle at center, #2e1a0b 0%, #150904 70%, #000 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      text-align: center;
+      padding: 2rem;
+    }
+    #scene2.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .gif-frame {
+      width: 250px;
+      height: 145px;
+      margin: 0 auto 1.2rem auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    }
+    .gif-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .recipient-name {
+      font-family: 'MonteCarlo', cursive;
+      font-size: 4.2rem;
+      color: #ffe89e;
+      text-shadow: 0 0 25px #ffd700, 0 0 60px #ff9900;
+      line-height: 1.1;
+      margin-bottom: -5px;
+    }
+    .banner-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+      background: linear-gradient(180deg, #ffffff 0%, #ffd700 50%, #b8860b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hallows-divider {
+      width: 300px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00ffcc, #ffd700, #ff0055, transparent);
+      margin: 0 auto 1.2rem auto;
+    }
+    .banner-quote {
+      font-family: 'MedievalSharp', serif;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      color: #f7d58b;
+      text-transform: uppercase;
+    }
+
+    /* SCENE 3 */
+    #scene3 {
+      background: radial-gradient(circle at 65% 20%, #151d38 0%, #0c0f20 45%, #050510 80%, #000005 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 40;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 0 3vw;
+      position: relative;
+    }
+    #scene3.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .moon-wrap {
+      position: absolute;
+      top: 40px;
+      right: 80px;
+      width: 120px;
+      height: 120px;
+      pointer-events: none;
+      z-index: 42;
+      filter: drop-shadow(0 0 30px rgba(255, 245, 205, 0.7));
+    }
+    .crescent-moon {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      box-shadow: 16px 12px 0 0 #fff8d6;
+      transform: rotate(-15deg);
+    }
+    .moon-halo {
+      position: absolute;
+      inset: -15px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 250, 220, 0.25) 0%, transparent 65%);
+    }
+
+    .tree-text-wrap {
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 45;
+    }
+    .named-greeting {
+      font-family: 'MonteCarlo', cursive;
+      font-size: 3.6rem;
+      color: #ffd700;
+      text-shadow: 0 0 25px #ffaa00;
+      line-height: 1.1;
+    }
+    .tree-text-wrap h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.6rem;
+      background: linear-gradient(180deg, #fff 15%, #00ffcc 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0.4rem 0 1rem 0;
+    }
+    .tree-text-wrap p {
+      color: #e0ca9b;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      line-height: 1.8;
+      font-family: 'MedievalSharp', serif;
+    }
+    #treeCanvas {
+      width: 650px;
+      height: 650px;
+      filter: drop-shadow(0 0 50px rgba(0, 255, 170, 0.5));
+      z-index: 45;
+    }
+
+    @media (max-width: 900px) {
+      #scene3 {
+        flex-direction: column;
+        justify-content: center;
+      }
+      #treeCanvas {
+        width: 380px;
+        height: 380px;
+      }
+      .recipient-name { font-size: 2.8rem; }
+      .named-greeting { font-size: 2.8rem; }
+      .banner-title { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body id="bodyRoot">
+
+  <button id="musicToggle">🎵 Music: Off</button>
+
+  <audio id="bgSong" loop preload="auto">
+    <source src="Elliot_James_Reay_-_All_I_dream_of_is_your_eyes__I_Think_They_Call_This_Love___Lyrics_(256k).mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="flashOverlay"></div>
+  <canvas id="magicCanvas"></canvas>
+
+  <svg id="flyingBolt" viewBox="0 0 140 24">
+    <line x1="8" y1="12" x2="115" y2="12" stroke="#ffffff" stroke-width="4"/>
+    <polygon points="115,4 138,12 115,20" fill="#00ffcc"/>
+    <path d="M 20 6 L 8 1 L 12 12 L 8 23 L 20 18 Z" fill="#ffd700"/>
+    <circle cx="125" cy="12" r="5" fill="#ffffff"/>
+  </svg>
+
+  <!-- SCENE 1 -->
+  <div id="scene1" class="container">
+    <div class="hogwarts-sub" id="hogwartsSub">&bull; Lumos Solem &bull; Strike The Soul</div>
+
+    <div class="heart-stage">
+      <div class="hallows-ring"></div>
+      <div class="golden-snitch">
+        <div class="wing wing-left"></div>
+        <div class="snitch-core"></div>
+        <div class="wing wing-right"></div>
+      </div>
+
+      <div class="heart-wrapper" id="heartTarget">
+        <svg class="horn horn-left" viewBox="0 0 30 60">
+          <path d="M5,55 Q-5,25 15,2 Q10,25 28,45 Z"/>
+        </svg>
+        <svg class="horn horn-right" viewBox="0 0 30 60">
+          <path d="M5,55 Q-5,25 15,2 Q10,25 28,45 Z"/>
+        </svg>
+
+        <svg class="heart-svg" viewBox="0 0 32 29.6">
+          <defs>
+            <radialGradient id="hpHeartGrad" cx="40%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#00ffcc"/>
+              <stop offset="25%" stop-color="#ff1a53"/>
+              <stop offset="70%" stop-color="#54001a"/>
+              <stop offset="100%" stop-color="#140006"/>
+            </radialGradient>
+          </defs>
+          <path fill="url(#hpHeartGrad)" stroke="#ffd700" stroke-width="0.9" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,16,21.2,16,21.2s16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+        </svg>
+
+        <svg class="stuck-bolt" id="stuckBolt" viewBox="0 0 140 24">
+          <line x1="8" y1="12" x2="115" y2="12" stroke="#ffffff" stroke-width="4"/>
+          <polygon points="115,4 138,12 115,20" fill="#00ffcc"/>
+          <path d="M 20 6 L 8 1 L 12 12 L 8 23 L 20 18 Z" fill="#ffd700"/>
+          <circle cx="125" cy="12" r="5" fill="#ffffff"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="wand-dock" id="wandDock">
+      <svg id="bowSvg" width="190" height="150" viewBox="0 0 190 150">
+        <path d="M 25 15 Q 105 75 25 135" stroke="#784212" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 26 18 Q 90 75 26 132" stroke="#d4ac0d" stroke-width="2" fill="none"/>
+        <circle cx="45" cy="40" r="4.5" fill="#4a2800"/>
+        <circle cx="68" cy="75" r="5.5" fill="#4a2800"/>
+        <circle cx="45" cy="110" r="4.5" fill="#4a2800"/>
+        <path id="bowString" d="M 25 15 Q 25 75 25 135" stroke="#00ffcc" stroke-width="2.2" fill="none"/>
+        <g id="arrowShaft">
+          <line x1="12" y1="75" x2="110" y2="75" stroke="#ffffff" stroke-width="3"/>
+          <polygon points="110,68 128,75 110,82" fill="#00ffcc"/>
+          <path d="M 20 70 L 12 65 L 15 75 L 12 85 L 20 80 Z" fill="#ffd700"/>
+        </g>
+      </svg>
+    </div>
+    <div class="guide-caption" id="guideCaption">&bull; Drag &amp; Release Wand (or Tap) to Cast &bull;</div>
+  </div>
+
+  <!-- SCENE 2 -->
+  <div id="scene2" class="container">
+    <div class="gif-frame">
+      <img src="https://media.giphy.com/media/26BRzozg4TCBXv6QU/giphy.gif" alt="Harry Potter Magic">
+    </div>
+    <div class="recipient-name">My dear felicity Darakhshan 😊😊</div>
+    <h1 class="banner-title">Happy Birthday</h1>
+    <div class="hallows-divider"></div>
+    <p class="banner-quote">&ldquo;Words are, in my not-so-humble opinion, our most inexhaustible source of magic.&rdquo;</p>
+  </div>
+
+  <!-- SCENE 3 -->
+  <div id="scene3" class="container">
+    <div class="moon-wrap">
+      <div class="moon-halo"></div>
+      <div class="crescent-moon"></div>
+    </div>
+
+    <div class="tree-text-wrap">
+      <div class="named-greeting">My dear felicity Darakhshan 😊😊,</div>
+      <h1>Happy Birthday</h1>
+      <p>Under this magical moonlit sky, may your life bloom with eternal joy, warmth, and dreams that shine brighter than all the stars above.</p>
+    </div>
+    <canvas id="treeCanvas" width="700" height="700"></canvas>
+  </div>
+
+  <script>
+    // Audio engine setup
+    const bgSong = document.getElementById('bgSong');
+    const musicToggle = document.getElementById('musicToggle');
+    let isMusicPlaying = false;
+
+    function playAudioSafe() {
+      if (!isMusicPlaying && bgSong) {
+        bgSong.volume = 0.65;
+        bgSong.play().then(() => {
+          isMusicPlaying = true;
+          musicToggle.innerText = '🎵 Music: On';
+        }).catch(() => {});
+      }
+    }
+    window.addEventListener('pointerdown', playAudioSafe, { once: true });
+
+    musicToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!bgSong) return;
+      if (bgSong.paused) {
+        bgSong.play();
+        isMusicPlaying = true;
+        musicToggle.innerText = '🎵 Music: On';
+      } else {
+        bgSong.pause();
+        isMusicPlaying = false;
+        musicToggle.innerText = '🔇 Music: Muted';
+      }
+    });
+
+    // Synthesized Sound Effects
+    const HarryAudio = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      playSpellBlast() {
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(140, now);
+          osc.frequency.exponentialRampToValueAtTime(20, now + 0.8);
+          gain.gain.setValueAtTime(1.0, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.8);
+        } catch(e) {}
+      }
+    };
+
+    // Background Canvas
+    const mCanvas = document.getElementById('magicCanvas');
+    const mCtx = mCanvas.getContext('2d');
+    function resizeMagic() {
+      mCanvas.width = window.innerWidth;
+      mCanvas.height = window.innerHeight;
+    }
+    resizeMagic();
+    window.addEventListener('resize', resizeMagic);
+
+    const ambientMotes = [];
+    for (let i = 0; i < 50; i++) {
+      ambientMotes.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * 2 + 0.8,
+        vy: -(Math.random() * 1.2 + 0.3),
+        vx: (Math.random() - 0.5) * 0.6,
+        alpha: Math.random() * 0.8 + 0.2,
+        color: Math.random() > 0.3 ? '#ffd700' : '#00ffcc'
+      });
+    }
+
+    const shockwaves = [];
+    const bombSparks = [];
+
+    function renderMagicFx() {
+      mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+
+      ambientMotes.forEach(e => {
+        e.y += e.vy;
+        e.x += e.vx;
+        if (e.y < -10) {
+          e.y = mCanvas.height + 10;
+          e.x = Math.random() * mCanvas.width;
+        }
+        mCtx.save();
+        mCtx.beginPath();
+        mCtx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
+        mCtx.fillStyle = e.color;
+        mCtx.globalAlpha = e.alpha;
+        mCtx.fill();
+        mCtx.restore();
+      });
+
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        const sw = shockwaves[i];
+        sw.r += sw.speed;
+        sw.alpha -= sw.decay;
+        if (sw.alpha <= 0) {
+          shockwaves.splice(i, 1);
+          continue;
+        }
+        mCtx.save();
+        mCtx.beginPath();
+        mCtx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+        mCtx.strokeStyle = sw.color;
+        mCtx.lineWidth = sw.width;
+        mCtx.globalAlpha = Math.max(0, sw.alpha);
+        mCtx.stroke();
+        mCtx.restore();
+      }
+
+      for (let i = bombSparks.length - 1; i >= 0; i--) {
+        const p = bombSparks[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.3;
+        p.vx *= 0.95;
+        p.vy *= 0.95;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          bombSparks.splice(i, 1);
+          continue;
+        }
+
+        mCtx.save();
+        mCtx.beginPath();
+        mCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        mCtx.fillStyle = p.color;
+        mCtx.globalAlpha = Math.max(0, p.alpha);
+        mCtx.fill();
+        mCtx.restore();
+      }
+
+      requestAnimationFrame(renderMagicFx);
+    }
+    requestAnimationFrame(renderMagicFx);
+
+    // Wand Interaction (Touch & Pointer Safe)
+    const wandDock = document.getElementById('wandDock');
+    const arrowShaft = document.getElementById('arrowShaft');
+    const bowString = document.getElementById('bowString');
+    const heartTarget = document.getElementById('heartTarget');
+    const stuckBolt = document.getElementById('stuckBolt');
+    const flyingBolt = document.getElementById('flyingBolt');
+    const guideCaption = document.getElementById('guideCaption');
+    const bodyRoot = document.getElementById('bodyRoot');
+    const flashOverlay = document.getElementById('flashOverlay');
+
+    let dragging = false;
+    let startX = 0;
+    let pull = 0;
+    let hasFired = false;
+
+    wandDock.addEventListener('pointerdown', (e) => {
+      if (hasFired) return;
+      wandDock.setPointerCapture(e.pointerId);
+      HarryAudio.init();
+      playAudioSafe();
+      dragging = true;
+      startX = e.clientX;
+    });
+
+    wandDock.addEventListener('pointermove', (e) => {
+      if (!dragging || hasFired) return;
+      const diff = startX - e.clientX;
+      pull = Math.max(0, Math.min(diff, 60));
+      arrowShaft.setAttribute('transform', `translate(${-pull}, 0)`);
+      bowString.setAttribute('d', `M 25 15 Q ${25 - pull} 75 25 135`);
+    });
+
+    function handleRelease() {
+      if (!dragging || hasFired) return;
+      dragging = false;
+
+      // Fires on drag OR simple tap click
+      if (pull > 15 || pull === 0) {
+        hasFired = true;
+        castSpell();
+      } else {
+        arrowShaft.setAttribute('transform', 'translate(0, 0)');
+        bowString.setAttribute('d', 'M 25 15 Q 25 75 25 135');
+      }
+    }
+
+    wandDock.addEventListener('pointerup', handleRelease);
+    wandDock.addEventListener('pointercancel', handleRelease);
+
+    function castSpell() {
+      bowString.setAttribute('d', 'M 25 15 Q 25 75 25 135');
+      arrowShaft.style.display = 'none';
+      guideCaption.style.opacity = '0';
+
+      const wandRect = wandDock.getBoundingClientRect();
+      const heartRect = heartTarget.getBoundingClientRect();
+
+      const startXPos = wandRect.left + 55;
+      const startYPos = wandRect.top + 75;
+      const hitX = heartRect.left + heartRect.width / 2;
+      const hitY = heartRect.top + heartRect.height / 2;
+
+      const angleRad = Math.atan2(hitY - startYPos, hitX - startXPos);
+      const angleDeg = angleRad * (180 / Math.PI);
+
+      flyingBolt.style.display = 'block';
+      flyingBolt.style.left = `${startXPos}px`;
+      flyingBolt.style.top = `${startYPos}px`;
+      flyingBolt.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg) scale(1)`;
+
+      requestAnimationFrame(() => {
+        flyingBolt.style.transition = 'left 0.28s cubic-bezier(0.12, 0.7, 0.2, 1), top 0.28s cubic-bezier(0.12, 0.7, 0.2, 1)';
+        flyingBolt.style.left = `${hitX}px`;
+        flyingBolt.style.top = `${hitY}px`;
+      });
+
+      setTimeout(() => {
+        detonateBombCracker(hitX, hitY);
+      }, 280);
+    }
+
+    function detonateBombCracker(x, y) {
+      flyingBolt.style.display = 'none';
+      heartTarget.style.animation = 'none';
+      stuckBolt.style.display = 'block';
+
+      HarryAudio.playSpellBlast();
+
+      flashOverlay.style.opacity = '0.95';
+      setTimeout(() => { flashOverlay.style.opacity = '0'; }, 110);
+
+      bodyRoot.classList.add('magical-quake');
+      setTimeout(() => bodyRoot.classList.remove('magical-quake'), 850);
+
+      shockwaves.push({ x: x, y: y, r: 10, speed: 25, alpha: 1, width: 12, decay: 0.024, color: '#ffffff' });
+      shockwaves.push({ x: x, y: y, r: 5, speed: 18, alpha: 1, width: 8, decay: 0.018, color: '#00ffcc' });
+
+      const spellPalette = ['#ffffff', '#00ffcc', '#ffd700', '#ff0055', '#ffe600'];
+      for (let i = 0; i < 120; i++) {
+        const rad = Math.random() * Math.PI * 2;
+        const force = Math.random() * 20 + 5;
+        bombSparks.push({
+          x: x,
+          y: y,
+          vx: Math.cos(rad) * force,
+          vy: Math.sin(rad) * force - 2,
+          size: Math.random() * 3.5 + 1.5,
+          color: spellPalette[Math.floor(Math.random() * spellPalette.length)],
+          alpha: 1,
+          decay: Math.random() * 0.02 + 0.01
+        });
+      }
+
+      heartTarget.classList.add('heart-falling');
+
+      setTimeout(() => {
+        const scene1 = document.getElementById('scene1');
+        const scene2 = document.getElementById('scene2');
+        const scene3 = document.getElementById('scene3');
+
+        scene1.style.opacity = '0';
+        setTimeout(() => scene1.style.display = 'none', 600);
+        scene2.classList.add('active');
+
+        setTimeout(() => {
+          scene2.classList.remove('active');
+          setTimeout(() => {
+            scene2.style.display = 'none';
+            scene3.classList.add('active');
+            blossomTree();
+          }, 800);
+        }, 3400);
+
+      }, 800);
+    }
+
+    // SCENE 3: Blossom Tree
+    function blossomTree() {
+      const canvas = document.getElementById('treeCanvas');
+      const ctx = canvas.getContext('2d');
+      const centerX = 350;
+      const centerY = 270;
+
+      // Night Stars
+      ctx.save();
+      for (let st = 0; st < 80; st++) {
+        ctx.beginPath();
+        ctx.arc(Math.random() * 700, Math.random() * 450, Math.random() * 1.5 + 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.7 + 0.3})`;
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Ancient Tree Limbs
+      ctx.save();
+      ctx.strokeStyle = '#221107';
+      ctx.lineWidth = 20;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(centerX, 680);
+      ctx.quadraticCurveTo(centerX - 24, 480, centerX + 4, 320);
+      ctx.stroke();
+
+      ctx.lineWidth = 9;
+      ctx.beginPath();
+      ctx.moveTo(centerX + 4, 370);
+      ctx.quadraticCurveTo(centerX - 90, 260, centerX - 145, 160);
+      ctx.moveTo(centerX + 4, 350);
+      ctx.quadraticCurveTo(centerX + 95, 250, centerX + 155, 170);
+      ctx.moveTo(centerX - 20, 280);
+      ctx.quadraticCurveTo(centerX - 15, 190, centerX, 130);
+      ctx.stroke();
+      ctx.restore();
+
+      // Blossoms
+      const blossoms = [];
+      const magicPalette = ['#00ffcc', '#55ffbb', '#ffd700', '#fff275', '#ffffff', '#ff3366', '#a855f7'];
+
+      for (let i = 0; i < 550; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const r = Math.sqrt(Math.random());
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+        blossoms.push({
+          x: centerX + (x * 14) * r,
+          y: centerY + (y * 14) * r,
+          targetRadius: Math.random() * 6.5 + 2.5,
+          color: magicPalette[Math.floor(Math.random() * magicPalette.length)],
+          delay: Math.random() * 1400
+        });
+      }
+
+      const start = performance.now();
+      function draw(now) {
+        const elapsed = now - start;
+        ctx.clearRect(0, 0, 700, 310);
+
+        blossoms.forEach(b => {
+          if (elapsed > b.delay) {
+            const progress = Math.min(1, (elapsed - b.delay) / 450);
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.targetRadius * progress, 0, Math.PI * 2);
+            ctx.fillStyle = b.color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = b.color;
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+
+        if (elapsed < 2400) {
+          requestAnimationFrame(draw);
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+  </script>
+</body>
+</html>
